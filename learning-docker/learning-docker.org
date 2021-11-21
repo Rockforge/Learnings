@@ -49,3 +49,48 @@
     - "Batteries included, but removable"
 *** Commands
     - docker container port <container> :: shows port used by container
+** Docker Networks: CLI Management
+*** Networks
+**** --network bridge
+     - default docker network which is NAT'ed behind the host IP
+**** --network host
+     - skips virtual networking but sacrifices security of the container made
+**** --network none
+     - removes eth0 and only leaves you with localhost interface in container
+*** Commands
+    - docker network ls :: show networks
+    - docker network inspect :: inspect a network
+    - docker network create --driver :: create a network (default drive is bridge)
+    - docker network connect :: attach network to container
+         * docker network connect <network> <container> :: Dynamically creates a NIC in a container on an existing virtual network
+    - docker network disconnect :: disconnect network to container
+         * docker network disconnect <network> <container>
+*** Example commands ran
+    - docker container run -d --name new_nginx --network my_app_net nginx
+*** Network defaults
+    - Create your apps so frontend/backend sit on same Docker network
+    - Their inter-communication never leaves host
+    - All internally exposed ports closed by default
+    - You must manually expose via *-p*, which is better default security
+** Docker Networks: DNS
+   - Can't really rely on Container ID's since they're dynamic
+   - Static IP's and using IP's for talking to containers is an anti-pattern. *AVOID THIS*
+*** Note: bridge doesn't have DNS server built into it by default
+*** Docker DNS
+    - Built-in DNS server that containers use by default
+    - Docker defaults the hostname to the container's name, but you can also set aliases
+*** Example commands ran
+    - docker container exec -it my_nginx ping new_nginx
+** Assignment:
+*** DNS round robin test
+    #+begin_src bash
+      # Creates two containers of elastic search that both have an alias of 'search'
+      docker container run -d --network <network> --network-alias search elasticsearch:2
+      docker container run -d --network <network> --network-alias search elasticsearch:2
+
+      # Run a container to check if nslookup search gives instances of elasticsearch
+      docker container run --rm --network <network> alpine:3.10 nslookup search
+
+      # Run a container to check if the curl for search changes instance of elasticsearch
+      docker container run --rm --network <network> centos:7 curl -s search:9200
+    #+end_src
