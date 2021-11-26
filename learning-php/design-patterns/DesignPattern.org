@@ -1,0 +1,6 @@
+* Decorator Pattern
+  - Wrapping classes to add some functionality
+  - Doesn't relly on inheritance
+
+* Adapter Pattern
+  - An adapter allows you to translate one interface for use with another

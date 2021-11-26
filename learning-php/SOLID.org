@@ -1,0 +1,146 @@
+* SOLID Design Principles
+** Single Responsibility
+*** A class should have one, and only one, reason to change
+** Open-closed Principle
+   - Entities should be open for extension, but closed for modification
+   - Change behavior without modifying source code
+*** Separate extensible behavior behind an interface, and flip the dependencies
+** Liskov Subsitution
+*** Dervied classes must be substitutable for their base classes
+    #+begin_src php
+      <?php
+
+      interface LessonRepositoryInterface {
+
+          /**
+           ,* To help with this, you might use doc blocks
+           ,* or if your PHP version permits, you can use type hint return declarations
+           ,* to have the repositories adhere to the this interface
+           ,*/
+
+          /**
+           ,* Fetch all records
+           ,*
+           ,* @return array
+           ,*/
+          public function getAll(): array
+      }
+
+      class FileLessonRepository implements LessonRepositoryInterface {
+
+          public function getAll(): array
+          {
+              // return through filesystem
+              return []
+          }
+      }
+
+      class DbLessonRepository implements LessonRepositoryInterface {
+
+          public function getAll(): array
+          {
+              // returns a collection
+              // Violates LSP
+              // return Lesson::all()
+
+              // The fact that we made this into an array
+              // Makes this repo class substitutable with FileLessonRepository
+              return Lesson::all()->toArray();
+          }
+      }
+
+
+      function foo(LessonRepositoryInterface $lesson)
+      {
+          // We can be assured that this will always return an array
+          $lessons = $lesson->getAll();
+      }
+    #+end_src
+*** Things to check to make it LSP
+    1. Signature must match
+    2. Preconditions can't be greater
+    3. Post conditions at least equal to
+    4. Exception types must match
+** Interface Segregation
+*** A client should not be forced to implement an interface that it doesn't use
+    #+begin_src php
+      <?php
+
+      interface ManageableInterface {
+          public function beManaged();
+      }
+
+      interface WorkableInterface {
+          public function work();
+      }
+
+      interface SleepableInterface {
+          public function sleep();
+      }
+
+
+      class AndroidWorker implements WorkableInterface, ManageableInterface {
+
+          public function work() {}
+
+          public function beManaged()
+          {
+              $this->work();
+          }
+
+      }
+
+      class HumanWorker implements WorkableInterface, SleepableInterface, ManageableInterface {
+
+          public function work() {}
+
+          public function sleep() {}
+
+          public function beManaged()
+          {
+              $this->work();
+
+              $this->sleep();
+          }
+
+      }
+
+
+      class Captian {
+
+          public function manage(ManageableInterface $worker)
+          {
+              $worker->beManaged();
+          }
+      }
+    #+end_src
+** Dependency Inversion
+*** Depend on abstractions, not on concretions
+*** Does not equal dependency injection
+*** All of this is about decoupling code
+
+    #+begin_src php
+      <?php
+
+      interface ConnectionInterface {
+          public function connect();
+      }
+
+      class DbConnection implements ConnectionInterface {
+
+          public function connect()
+          {
+              // TODO: Implement connect() method
+          }
+      }
+
+      class PasswordReminder {
+
+          // Should rely on abstraction
+          public function __construct(ConnectionInterface $dbConnection)
+          {
+
+          }
+
+      }
+    #+end_src
