@@ -24,3 +24,6 @@
   - Allows you to take any kind of business rule and promote it to a first class citizen
   - You can take that logic and wrap it in it's own object
 ** Note: Not really to be used
+* Observer Pattern
+  - An object that is named a subject, maintains a list of dependents, called observers
+  - It notifies the observers automatically of any state changes, usually by calling one of their methods
