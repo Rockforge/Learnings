@@ -9,3 +9,8 @@
   - We extract methods that are reused into an abstract class
     and differences are deferred into a subclass
   - When there's just enough differences but you don't really know how to do that
+
+
+* Strategy Pattern
+  1. Define a family of algorithms
+  2. Encapsulate and make them interchangeable
