@@ -4,3 +4,8 @@
 
 * Adapter Pattern
   - An adapter allows you to translate one interface for use with another
+
+* Template Method Pattern
+  - We extract methods that are reused into an abstract class
+    and differences are deferred into a subclass
+  - When there's just enough differences but you don't really know how to do that
