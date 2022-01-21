@@ -11,6 +11,7 @@ fake_items_db = [
     {'item_name': 'Baz'},
 ]
 
+
 class ModelName(str, Enum):
     """A class used to represent a model name
 
@@ -55,8 +56,16 @@ async def root():
     return {'message': 'Hello World'}
 
 @app.get('/items/')
-async def read_item(skip: int = 0, limit: int = 10):
-    return fake_items_db[skip : skip + limit]
+async def read_item(q: Optional[str] = None):
+    results = {'items': [
+        {'item_id': 'Foo'},
+        {'item_id': 'Bar'},
+    ]}
+
+    if q:
+        results.update({'q': q})
+
+    return results
 
 @app.post('/items')
 async def create_item(item: Item):
@@ -171,4 +180,3 @@ async def get_model(model_name: ModelName):
 @app.get('/files/{file_path:path}')
 async def read_file(file_path: str):
     return {'file_path': file_path}
-
