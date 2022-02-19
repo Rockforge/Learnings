@@ -1,0 +1,51 @@
+* Blockchain
+  - single source of truth when it comes ot transactions
+* Metamask
+** Has test networks that you can use
+** Steps of transaction in metamask
+   1. Talks to Infura
+   2. Infura talks to the blockchain node
+   3. Blockchain node talks to the blockain
+   4. and goes back up
+* Ethereum Transactions
+** Parts of a Ethereum Transaction
+   - from: [account]
+   - to: [account] (optional)
+   - value: [integer] in wei
+   - gas: maximum amount of gas used
+   - gasPrice: amount of wei per gas
+   - data: ABI Byte string (optional)
+   - nonce: Integer of a nonce
+** How does it know it's allowed to transfer amount
+   - It uses a *signature*
+   - *signTransaction* function in web3js
+     - The account needs to be unlocked
+** Accounts and Signing
+   1. A private key is used by Metamask
+   2. The private key is then processed using
+      ECDSA (Elliptic Curve Digital Signature Algorithm)
+   3. The output of that is then used as the public key (64 bytes long)
+   4. The public key is then used to create an ethereum account
+   5. The private key is also used to create a signed transaction
+   6. The signed transaction is then ran through a ECRECOVER function then
+      compares that to a Ethereum account to validate the transaction
+** Key Take-aways
+   - Transaction signatures ensure authenticity of transactions
+   - Signatures are generated from private keys
+   - Public keys and addresses are generated from private keys
+   - Private keys have to be kept save under all circumstances
+* Cryptographic Hashing
+  - hash function :: a function that takes input and outputs a digest
+** Five ideal properties
+   - it is detertiministic so the same message always results in the same hash
+   - it is quick to compute the hash value for any given message
+   - it is infeasible to generate a message from its hash value except
+     by trying all possible messages
+   - a small change in the message should change the hash value so extensively
+     that the new hash value appears uncorrelated with the old hash value
+   - it is infeasible to find two different messages with the same hash value
+** Key take-aways
+   - Hashing is the mathematical foundation of blockchains
+   - Blocks have hashes of previous blocks
+     - Are chained together
+   - Changing information in a previous block changes all the blocks thereafter (infeasible)
