@@ -6,3 +6,5 @@ from . import loader
 # Loads data and such
 loader.load_indices(client)
 loader.load_data(client)
+
+pokeService = PokemonService(client)
