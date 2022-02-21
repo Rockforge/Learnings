@@ -25,6 +25,6 @@ class PokemonService:
         """
 
         if index not in self.indices:
-            raise Exception
+            raise Exception('Index not found')
 
-        return client.get(self.indices[index], id)
+        return self.client.get(self.indices[index], id)
