@@ -2,8 +2,8 @@ class PokemonService:
 
     """Pokemon Service"""
 
-    # The list of indexes in our OpenSearch
-    indexes = {
+    # The list of indices in our OpenSearch
+    indices = {
         'pokedex': 'pokedex-index',
         'items': 'items-index',
         'moves': 'moves-index',
@@ -24,7 +24,7 @@ class PokemonService:
             The document ID of the data
         """
 
-        if index not in self.indexes:
+        if index not in self.indices:
             raise Exception
 
-        return client.get(self.indexes[index], id)
+        return client.get(self.indices[index], id)
