@@ -49,3 +49,50 @@
    - Blocks have hashes of previous blocks
      - Are chained together
    - Changing information in a previous block changes all the blocks thereafter (infeasible)
+* Smart Contracts
+** What is a smart contract
+*** Coined by computer scientist Nick Szabo in 1994
+*** A piece of code running on the blockchain
+**** it's a state machine
+**** needs transactions to change state
+**** can do logic operations
+*** Statechange happens through mining + transactions
+*** It's turing complete
+**** in theory it can solve any computation problem
+** There are a lot of programming languages for smart contracts
+   - but all of them are compiled to EVM bytecode
+   - Such an example is solidity
+** Solidity
+   - The most popular language
+   - It's compared to Javascript/ECMAScript
+   - Every high language code compiles to bytecode
+   - Every ethereum node in the network executes the same code
+** Structure of a solidity contract
+*** Class like structure
+*** Contains functions
+*** Control structures - if/else
+*** Loops - for/while
+*** Data types
+**** Unit, Boolean, Array
+**** Struct, Mapping, Address
+**** No Floats
+*** Inheritable
+*** Special structures like 'modifiers'
+*** Imports
+* Ethereum Networks
+  - nodes and networks
+  - Using ethereum protocol
+** Genesis Block :: The start of a blockchain
+** Types of Networks
+*** Main Network
+    - persistent
+    - real blockchain
+    - costs money
+*** Test Networks
+    - persistent but can be deleted
+    - real blockchain
+    - beta release
+*** Developer Networks (e.g. Ganache)
+    - unit testing
+    - fast
+    - non-persistent
