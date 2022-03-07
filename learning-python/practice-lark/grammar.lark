@@ -1,0 +1,9 @@
+
+?query : query_word (" " | query_word)*
+
+
+query_word : WORD | special_chars
+
+special_chars : "*"
+
+%import common.WORD
