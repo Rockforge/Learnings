@@ -1,0 +1,124 @@
+#+STARTUP: indent
+* Image vs Container
+** Image :: The binaries, libraries and source code that make up an app
+** Containers :: An instance of that image running as a process
+** Registry :: The docker hub or a collection of images
+** Container
+*** Example command
+docker container run --publish 80:80 (--detach) nginx
+*** Parts of that command
+**** docker - the main command
+**** container - the management command
+**** run - an action you can do in the container
+**** --publish 80:80 - open port 80 in the host machine and route that traffic to the container ip on port 80
+**** Download an nginx image from docker hub
+**** (Optional) detach - runs the command in the background
+*** What happens in 'docker container run'
+1. Looks for image locally in image cache
+2. Then looks in remote image repo (defaults to docker hub)
+3. Downloads latest version
+4. Creates new container based on that image and prepares to start
+5. Gives it a virtual IP on a private network inside docker image
+6. Opens up port 80 on host and forwards to port 80 in container
+*** Containers aren't VM's
+* Getting inside of a container
+** Running a container with shell
+*** docker container run -it - start a new container interactively
+*** docker container exec -it - start a shell/command in an already *running* container
+*** docker container start -it - start a shell/command in a stopped container
+* Docker Networking
+** Concepts
+*** docker container run -p <host>:<container>
+*** docker container port <container> - check port
+** Commands
+*** docker network ls - show networks
+*** docker network inspect - inspect a network
+*** docker network create --driver - create a network
+*** docket network connect - connect to a network
+*** docket network disconnect - disconnect from a network
+** bridge - is the default network docker
+** --network host - uses the host
+** --network none - removes the eth0 and just leaves you with a localhost network container
+* Docker Networks: DNS
+** Forget IP's
+** Use the container name as the DNS
+** Recommend: Use custom networks
+* What is an Image
+** App binaries and dependencies
+** Not a complete OS. No kernel, kernel modules (e.g. drivers)
+** Can be as small as one file, like a golang static binary
+** Big as an Ubuntu distro with apt, and Apache, PHP, and more installed
+* Images aren't named - they are tagged
+* Docker Hub, the apt package system for containers
+* Container Lifetime and Persistent Data
+** *Usually* immutable and ephemeral
+** The container shouldn't contain unique data from the DB
+** Unique data is *persistent data*
+** Two ways: Volumes and Bind mounts
+** Volumes: make special location outside of the container UFS
+** Bind mounts: link container path to the host path
+** Persistent Data: Volumes
+*** VOLUME command in Dockerfile
+** Persistent Data: Bind Mounting
+*** Maps a host file or directory to a container file or directory
+*** Just two locations pointing to the same file(s)
+*** Skip UFS, and host files overwrite any in container
+*** Can't use in Dockerfile, must be in container run
+*** -v <full_path>:<path_container>
+* Docker Compose
+** WHY: Configure relationship between Containers
+** WHY: save our docker container run settings in easy-to-read file
+** WHY: Create one-line developer environment startups
+** Comprised of 2 separate but related things
+*** YAML formatted file. docker-compose.yml
+**** containers
+**** networks
+**** volumes
+*** docker-compose used for local dev/test automation
+** Compose can also build your custom images
+* Docker Swarm
+** Swarm Mode: Built-in Orchestration
+*** Clustering solution built inside Docker
+*** Not related to Swarm "classic" for pre-1.12 versions
+***
+* Kubernetes
+** container orchestrator
+** Container orchestration - make many servers act like one
+** Released by Google. Maintained by a large community
+** Runs on top of Docker as set of API's in containers
+** Provides API/CLI to manage containers across servers
+** Many clouds to provide it for you
+** Many vendors make a 'distribution' of it
+** Why Kubernetes
+*** Orchestration: Next logical step in journey to faster DevOps
+*** Servers + Change rate = Benefit of orchestration
+* Kubernetes vs. Swarm
+** Swarm
+*** Comes with Docker, single vendor container platform
+*** Easiest orchestrator to deploy/manage yourself
+*** 20% features for 80% use cases
+*** Runs anywhere Docker does
+** Kubernetes
+*** Clouds will deploy/manage Kubernetes for you
+*** Infra vendors are making their own distributions
+*** Widest adoption and community
+*** Flexible: Covers widest set of use cases
+* Kubernetes: Basic Terms
+** Kubernetes: The whole orchestration system
+** kubectl: CLI to configure K8s and manage apps
+** Node: Single server in K8s cluster
+** Kubelet: K8s agent running on nodes
+** Control Plane: Set of containers that manage the cluster
+*** Includes API server, scheduler, controller manager, etcd, and more
+*** Sometimes called the 'master'
+* Kubernetes Container Abstractions
+** Pods: one or more containers running together on one Node
+** Controller: For creating/updating pods and other objects
+** Service: network endpoint to connect to a pod
+** Namespace: Filtered groups of objects in cluster
+* Pods: Why do they exist:
+** Layer of abstraction
+** It's just an idea of a resource type
+** Unlike Docker, you can't create a container directly in K8s
+** You create Pods via CLI, YAML, or API
+** *kubelet* tells the *container runtime* to create containers for you
