@@ -1,3 +1,5 @@
+* Image registries :: are for docker images
+
 * Image vs Container
 ** Image
    - Is the application we want to run
