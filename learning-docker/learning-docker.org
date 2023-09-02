@@ -1,3 +1,4 @@
+#+STARTUP: indent
 * Image registries :: are for docker images
 
 * Image vs Container
@@ -98,7 +99,7 @@
 * What's in an Image (and What isn't)
   - App binaries and dependencies
   - Metadata about image data and how to run the image
-  - Not a complete OS. No kernel, kernel modules (e.g. drivers)
+  - Not a complete OS. No kernel and kernel modules (e.g. drivers)
   - Small as one file
   - Big as a Ubuntu distro
 * Using Docker Hub registry images
@@ -106,3 +107,8 @@
   - Use 'Official' when starting out
   - Alpine is smaller than their Debian counterparts
 * Image Layers
+** Commands
+*** docker image history <image:tag> :: show history of image layers
+  - the blank layer is called the *sratch* which is the starting point of all images
+** Image layers are always cached if no changes were made
+* Image Tagging and Pushing
