@@ -109,6 +109,24 @@
 * Image Layers
 ** Commands
 *** docker image history <image:tag> :: show history of image layers
-  - the blank layer is called the *sratch* which is the starting point of all images
-** Image layers are always cached if no changes were made
+*** docker image inspect <image:tag>
+** The blank layer at the start of every docker image is called *scratch*
+** Image layers are always cached
+** We're never storing the entire stack of image layers more than once
 * Image Tagging and Pushing
+** Commands
+*** docker image tag <source:[tag]>  <target:[tag]>
+**** Example: docker image tag nginx nogicrockforge/nginx
+*** docker image push <target:[tag]>
+**** Example: docker image push nogicrockforge/nginx
+**** Note: it's important that you include the name of your account since it means you have access to it and can upload
+* Building Images
+* Running docker builds
+** Commands
+*** docker image build -t <tag> .
+**** Example: docker image build -t exmaple-image . ('.' means in the current directory)
+** Keep the things that change the least at the top of your Dockerfile
+** And the things that change the most at the bottom of your Dockerfile
+* Extending Official Images
+- Use Dockerfile
+* Container lifetime and persistent data
